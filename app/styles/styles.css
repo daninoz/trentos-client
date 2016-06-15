@@ -1,0 +1,85 @@
+body {
+    padding-top: 50px;
+}
+
+.navbar .text-success {
+    color: #3c763d !important;
+}
+
+.navbar .navbar-right {
+    margin-right: 0;
+}
+
+.navbar .text-danger {
+    color: #a94442 !important;
+}
+
+.jumbotron {
+    background-position: bottom;
+    background-image: url('../images/bgbig/running.jpg');
+    color: white;
+}
+
+.feed {
+    margin-top: 20px;
+}
+
+.feed .status .panel-heading {
+    background-position: bottom;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feed .status.mountain-bike .panel-heading {
+    background-image: url('../images/backgrounds/montain.png');
+}
+
+.feed .status.trekking .panel-heading {
+    background-image: url('../images/backgrounds/trekking.png');
+}
+
+.feed .status.running .panel-heading {
+    background-image: url('../images/backgrounds/running.png');
+}
+
+.feed .status .panel-heading .thumbnail {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding: 0;
+    border: 5px solid white;
+}
+
+.feed .status .panel-heading .thumbnail img {
+    object-fit: cover;
+}
+
+.feed .panel-body > div > div {
+    margin-bottom: 20px;
+}
+
+.feed .status .panel-heading h3 {
+    display: inline-block;
+    color: white;
+}
+
+.feed .comments .comment {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.feed .comments .thumbnail {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding: 0;
+    border: none;
+    float: left;
+    margin-right: 10px;
+}

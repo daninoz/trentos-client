@@ -1,0 +1,51 @@
+<div class="container">
+
+  <div class="feed">
+    <div class="status mountain-bike panel panel-default" ng-repeat="event in events">
+      <div class="panel-heading">
+        <a href="#" class="thumbnail">
+          <img src="//graph.facebook.com/{{ event.user.facebook }}/picture?type=large" alt="{{ event.user.displayName }}">
+        </a>
+        <h3 class="panel-title">
+          {{ event.user.displayName }}<br/>
+          <small><span am-time-ago="event.created_at"></span></small>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div>
+            {{ event.description }}
+          </div>
+          <button class="btn btn-primary" type="button" ng-click="like(event.id)">
+            Me gusta <span class="badge">{{ event.likes.length }}</span>
+          </button>
+          <button class="btn btn-success" type="button"
+              ng-click="displayComments[event.id] = !displayComments[event.id]">
+            Comentarios <span class="badge">{{ event.comments.length }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="panel-footer comments" ng-show="event.comments.length && displayComments[event.id]">
+        <div class="comment" ng-repeat="comment in event.comments">
+          <a href="#" class="thumbnail">
+            <img src="//graph.facebook.com/{{ comment.user.facebook }}/picture?type=large"
+                alt="{{ comment.user.displayName }}">
+          </a>
+          <div>
+            <p class="text-info ">{{ comment.user.displayName }}</p>
+            <p>{{ comment.comment }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <form class="row">
+          <div class="col-xs-8 col-sm-10">
+            <input type="text" class="form-control" ng-model="comments[event.id]" placeholder="Escribe algo...">
+          </div>
+          <button type="submit" class="btn btn-default" ng-click="comment(event.id)">Comentar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

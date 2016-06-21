@@ -1,35 +1,48 @@
-angular.module('trentos')
-    .controller('NavbarCtrl', function ($scope, $auth, $uibModal, $state, toastr) {
-      $scope.isAuthenticated = function () {
-        return $auth.isAuthenticated();
-      };
+(function () {
+  'use strict';
 
-      $scope.openAddEventModal = function () {
-        var modalInstance = $uibModal.open({
-          templateUrl: 'app/partials/add_event.html',
-          controller: 'AddEventCtrl'
-        });
+  angular
+      .module('trentos')
+      .controller('NavbarController', NavbarController);
 
-        modalInstance.result.then(function () {
+  NavbarController.$inject = ['$rootScope', '$auth', '$uibModal', '$state', '$http', 'toastr'];
+  function NavbarController ($rootScope, $auth, $uibModal, $state, $http, toastr) {
+    var vm = this;
 
-        });
-      };
+    vm.isAuthenticated = isAuthenticated;
+    vm.openAddEventModal = openAddEventModal;
+    vm.logout = logout;
 
-      $scope.openLoginModal = function () {
-        var modalInstance = $uibModal.open({
-          templateUrl: 'app/partials/login.html',
-          controller: 'LoginCtrl'
-        });
+    getSports();
 
-        modalInstance.result.then(function () {
-          $state.go('events');
-        });
-      };
+    function isAuthenticated () {
+      return $auth.isAuthenticated();
+    }
 
-      $scope.logout = function () {
-        $auth.logout().then(function () {
-          toastr.info('You have been logged out');
-          $state.go('home');
-        });
-      };
-    });
+    function openAddEventModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/add_event.html',
+        controller: 'AddEventsController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        debugger;
+        $rootScope.$broadcast('newEvent');
+      });
+    }
+
+    function logout () {
+      $auth.logout().then(function () {
+        toastr.info('You have been logged out');
+        $state.go('home');
+      });
+    }
+
+    function getSports () {
+      $http.get('/api/sports').then(function (response) {
+        vm.sports = response.data;
+      });
+    }
+  }
+})();

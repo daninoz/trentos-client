@@ -1,33 +1,53 @@
-angular.module('trentos')
-    .controller('AddEventCtrl', function ($scope, $uibModalInstance, $http) {
+(function () {
+  'use strict';
 
-      $scope.event = {};
+  angular
+      .module('trentos')
+      .controller('AddEventsController', AddEventsController);
 
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss();
-      };
+  AddEventsController.$inject = ['$uibModalInstance', '$http'];
+  function AddEventsController ($uibModalInstance, $http) {
+    var vm = this;
 
-      $http.get('/api/sports').then(function (response) {
-        $scope.sports = response.data;
+    vm.event = {};
+    vm.cancel = cancel;
+    vm.add = add;
+    vm.openDatePopup = openDatePopup;
+
+    getSports();
+    setDateConfig();
+
+    function cancel () {
+      $uibModalInstance.dismiss();
+    }
+
+    function add () {
+      $http.post('/api/events', vm.event).then(function () {
+        $uibModalInstance.close();
       });
+    }
 
-      $scope.add =  function () {
-        $http.post('/api/events', $scope.event).then(function () {
-          $uibModalInstance.close();
-        });
-      }
+    function openDatePopup () {
+      vm.datePopup.opened = true;
+    }
 
-      $scope.format = 'dd/MM/yyyy';
-      $scope.datePopup = {
+    function getSports () {
+      $http.get('/api/sports').then(function (response) {
+        vm.sports = response.data;
+      });
+    }
+
+    function setDateConfig () {
+      vm.dateFormat = 'dd/MM/yyyy';
+      vm.datePopup = {
         opened: false
       };
-      $scope.dateOptions = {
+      vm.dateOptions = {
         formatYear: 'yyyy',
         minDate: new Date(),
         startingDay: 1
       };
-      $scope.openDatePopup = function() {
-        $scope.datePopup.opened = true;
-      };
+    }
 
-    });
+  }
+})();

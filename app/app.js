@@ -1,61 +1,83 @@
-angular.module('trentos', ['satellizer', 'ui.router', 'toastr', 'ngAnimate', 'ui.bootstrap', 'angularMoment'])
-    .config(function ($authProvider, $stateProvider, $urlRouterProvider, toastrConfig) {
+(function () {
+  'use strict';
 
-      $stateProvider
-          .state('home', {
-            url: '/',
-            controller: 'HomeCtrl',
-            templateUrl: 'app/partials/home.html'
-          })
-          .state('login', {
-            url: '/login',
-            templateUrl: 'app/partials/login.html',
-            controller: 'LoginCtrl',
-            resolve: {
-              skipIfLoggedIn: skipIfLoggedIn
-            }
-          })
-          .state('events', {
-            url: '/events',
-            templateUrl: 'app/partials/events.html',
-            controller: 'EventsCtrl',
-            resolve: {
-              loginRequired: loginRequired
-            }
-          });
+  angular
+      .module('trentos', ['satellizer', 'ui.router', 'toastr', 'ngAnimate', 'ui.bootstrap', 'angularMoment'])
+      .config(config)
+      .run(runBlock);
 
-      $urlRouterProvider.otherwise('/');
+  config.$inject = ['$authProvider', '$stateProvider', '$urlRouterProvider', 'toastrConfig'];
+  function config ($authProvider, $stateProvider, $urlRouterProvider, toastrConfig) {
 
-      $authProvider.facebook({
-        clientId: '1040065426062280'
-      });
+    $stateProvider
+        .state('home', {
+          url: '/',
+          controller: 'HomeController',
+          controllerAs: 'vm',
+          templateUrl: 'app/partials/home.html'
+        })
+        .state('login', {
+          url: '/login',
+          templateUrl: 'app/partials/login.html',
+          controller: 'LoginController',
+          controllerAs: 'vm',
+          resolve: {
+            skipIfLoggedIn: skipIfLoggedIn
+          }
+        })
+        .state('events', {
+          url: '/events',
+          templateUrl: 'app/partials/events.html',
+          controller: 'EventsController',
+          controllerAs: 'vm',
+          resolve: {
+            loginRequired: loginRequired
+          }
+        })
+        .state('sports', {
+          url: '/sports/:sportId',
+          templateUrl: 'app/partials/sports.html',
+          controller: 'SportsController',
+          controllerAs: 'vm',
+          resolve: {
+            loginRequired: loginRequired
+          }
+        });
 
-      angular.extend(toastrConfig, {
-        positionClass: 'toast-bottom-right'
-      });
+    $urlRouterProvider.otherwise('/');
 
-      function skipIfLoggedIn ($q, $auth) {
-        var deferred = $q.defer();
-        if ($auth.isAuthenticated()) {
-          deferred.reject();
-        } else {
-          deferred.resolve();
-        }
-        return deferred.promise;
-      }
-
-      function loginRequired ($q, $location, $auth) {
-        var deferred = $q.defer();
-        if ($auth.isAuthenticated()) {
-          deferred.resolve();
-        } else {
-          $location.path('/login');
-        }
-        return deferred.promise;
-      }
-
-    })
-    .run(function (amMoment) {
-      amMoment.changeLocale('es');
+    $authProvider.facebook({
+      clientId: '1040065426062280'
     });
 
+    angular.extend(toastrConfig, {
+      positionClass: 'toast-bottom-right'
+    });
+
+    function skipIfLoggedIn ($q, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.reject();
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+    }
+
+    function loginRequired ($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.resolve();
+      } else {
+        $location.path('/login');
+      }
+      return deferred.promise;
+    }
+
+  }
+
+  runBlock.$inject = ['amMoment'];
+  function runBlock (amMoment) {
+    amMoment.changeLocale('es');
+  }
+})();

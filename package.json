@@ -22,6 +22,7 @@
   "devDependencies": {
     "connect-modrewrite": "^0.9.0",
     "gulp": "^3.9.1",
-    "gulp-connect": "^4.0.0"
+    "gulp-connect": "^4.0.0",
+    "jscs": "^3.0.4"
   }
 }

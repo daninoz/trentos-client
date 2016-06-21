@@ -2,13 +2,13 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     modRewrite = require('connect-modrewrite');
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   connect.server({
     root: './',
     host: 'local.trentos.app',
     port: 9000,
     livereload: true,
-    middleware: function() {
+    middleware: function () {
       return [
         modRewrite([
           '^/api/(.*)$ http://trentos.app/api/$1 [P]',

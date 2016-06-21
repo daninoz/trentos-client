@@ -3,10 +3,10 @@
 
   angular
       .module('trentos')
-      .controller('EventsController', EventsController);
+      .controller('SportsController', SportsController);
 
-  EventsController.$inject = ['$rootScope', '$auth', '$http'];
-  function EventsController ($rootScope, $auth, $http) {
+  SportsController.$inject = ['$auth', '$http', '$stateParams'];
+  function SportsController ($auth, $http, $stateParams) {
 
     var vm = this;
 
@@ -18,10 +18,8 @@
 
     getEvents();
 
-    $rootScope.$on('newEvent', getEvents);
-
     function getEvents () {
-      $http.get('/api/events').then(function (response) {
+      $http.get('/api/sports/' + $stateParams.sportId + '/events').then(function (response) {
         vm.events = response.data;
       });
     }

@@ -1,12 +1,36 @@
-angular.module('trentos')
-    .controller('HomeCtrl', function($scope, $auth, $location) {
+(function () {
+  'use strict';
 
-      $scope.isAuthenticated = function() {
-        return $auth.isAuthenticated();
-      };
+  angular
+      .module('trentos')
+      .controller('HomeController', HomeController);
 
-      if ($auth.isAuthenticated()) {
-        $location.path('/events');
-      }
+  HomeController.$inject = ['$auth', '$location', '$uibModal', '$state'];
+  function HomeController ($auth, $location, $uibModal, $state) {
+    var vm = this;
 
-    });
+    vm.isAuthenticated = isAuthenticated;
+    vm.openLoginModal = openLoginModal;
+
+    function isAuthenticated () {
+      return $auth.isAuthenticated();
+    }
+
+    function openLoginModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/login.html',
+        controller: 'LoginController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        $state.go('events');
+      });
+    }
+
+    if ($auth.isAuthenticated()) {
+      $location.path('/events');
+    }
+
+  }
+})();

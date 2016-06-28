@@ -5,8 +5,8 @@
       .module('trentos')
       .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['$location', '$auth', '$uibModalInstance', 'toastr'];
-  function LoginController ($location, $auth, $uibModalInstance, toastr) {
+  LoginController.$inject = ['$rootScope', '$location', '$auth', '$uibModalInstance', '$http', 'toastr'];
+  function LoginController ($rootScope, $location, $auth, $uibModalInstance, $http, toastr) {
     var vm = this;
 
     vm.authenticate = authenticate;
@@ -15,6 +15,9 @@
     function authenticate (provider) {
       $auth.authenticate(provider)
           .then(function () {
+            $http.get('api/me').then(function (response) {
+              $rootScope.user = response.data;
+            });
             toastr.success('You have successfully signed in with ' + provider + '!');
             $uibModalInstance.close();
           })

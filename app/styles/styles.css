@@ -81,3 +81,7 @@ body {
     float: left;
     margin-right: 10px;
 }
+
+.feed .status.highlight, .feed .status.highlight .comments,  .feed .status.highlight .panel-footer {
+    background-color: #F0F0F0;
+}

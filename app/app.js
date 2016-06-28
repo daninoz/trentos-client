@@ -64,10 +64,17 @@
       return deferred.promise;
     }
 
-    function loginRequired ($q, $location, $auth) {
+    function loginRequired ($rootScope, $http, $q, $location, $auth) {
       var deferred = $q.defer();
       if ($auth.isAuthenticated()) {
-        deferred.resolve();
+        if (!$rootScope.user) {
+          $http.get('api/me').then(function (response) {
+            $rootScope.user = response.data;
+            deferred.resolve();
+          });
+        } else {
+          deferred.resolve();
+        }
       } else {
         $location.path('/login');
       }

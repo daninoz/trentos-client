@@ -5,8 +5,8 @@
       .module('trentos')
       .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$auth', '$location', '$uibModal', '$state'];
-  function HomeController ($auth, $location, $uibModal, $state) {
+  HomeController.$inject = ['$auth', '$uibModal', '$state'];
+  function HomeController ($auth, $uibModal, $state) {
     var vm = this;
 
     vm.isAuthenticated = isAuthenticated;
@@ -29,7 +29,7 @@
     }
 
     if ($auth.isAuthenticated()) {
-      $location.path('/events');
+      $state.go('events');
     }
 
   }

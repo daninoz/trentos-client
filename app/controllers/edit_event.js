@@ -33,7 +33,7 @@
     function getEvent () {
       $http.get('/api/events/' + eventId).then(function (response) {
         vm.event = response.data;
-        vm.event.sport_id = getSportById(vm.event.sport.id);
+        vm.event.sport_id = vm.event.sport.id;
         delete vm.event.sport;
         vm.event.date = new Date(vm.event.date);
       });

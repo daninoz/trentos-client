@@ -14,6 +14,7 @@
     vm.logout = logout;
 
     getSports();
+    $rootScope.$on('login', getSports);
 
     function isAuthenticated () {
       return $auth.isAuthenticated();
@@ -27,14 +28,13 @@
       });
 
       modalInstance.result.then(function () {
-        debugger;
         $rootScope.$broadcast('newEvent');
       });
     }
 
     function logout () {
       $auth.logout().then(function () {
-        toastr.info('You have been logged out');
+        toastr.info('Has cerrado sesion');
         $state.go('home');
       });
     }

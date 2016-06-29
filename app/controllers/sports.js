@@ -5,18 +5,25 @@
       .module('trentos')
       .controller('SportsController', SportsController);
 
-  SportsController.$inject = ['$auth', '$http', '$stateParams'];
-  function SportsController ($auth, $http, $stateParams) {
+  SportsController.$inject = ['$rootScope', '$auth', '$http', '$stateParams'];
+  function SportsController ($rootScope, $auth, $http, $stateParams) {
 
     var vm = this;
 
     vm.isAuthenticated = isAuthenticated;
+    vm.isAuthor = isAuthor;
+    vm.isAdmin = isAdmin;
     vm.like = like;
     vm.comment = comment;
+    vm.remove = remove;
+    vm.edit = edit;
+    vm.highlight = highlight;
     vm.comments = [];
     vm.displayComments = [];
 
     getEvents();
+
+    $rootScope.$on('newEvent', getEvents);
 
     function getEvents () {
       $http.get('/api/sports/' + $stateParams.sportId + '/events').then(function (response) {
@@ -24,8 +31,49 @@
       });
     }
 
+    function remove (eventId) {
+      $http.delete('/api/events/' + eventId).then(function (response) {
+        getEvents();
+      });
+    }
+
+    function highlight (eventId) {
+      $http.patch('/api/events/' + eventId).then(function (response) {
+        getEvents();
+      });
+    }
+
+    function edit (eventId) {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/edit_event.html',
+        controller: 'EditEventsController',
+        controllerAs: 'vm',
+        resolve: {
+          eventId: function () {
+            return eventId;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        $rootScope.$broadcast('newEvent');
+      });
+    }
+
     function isAuthenticated () {
       return $auth.isAuthenticated();
+    }
+
+    function isAuthor(userId) {
+      if ($rootScope.user.id) {
+        return $rootScope.user.id === userId;
+      }
+    }
+
+    function isAdmin() {
+      if ($rootScope.user.id) {
+        return $rootScope.user.is_admin;
+      }
     }
 
     function like (id) {

@@ -15,10 +15,11 @@
     function authenticate (provider) {
       $auth.authenticate(provider)
           .then(function () {
+            $rootScope.$broadcast('login');
             $http.get('api/me').then(function (response) {
               $rootScope.user = response.data;
             });
-            toastr.success('You have successfully signed in with ' + provider + '!');
+            toastr.success('Has ingresado exitosamente con ' + provider + '!');
             $uibModalInstance.close();
           })
           .catch(function (error) {

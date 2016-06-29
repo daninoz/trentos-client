@@ -85,3 +85,13 @@ body {
 .feed .status.highlight, .feed .status.highlight .comments,  .feed .status.highlight .panel-footer {
     background-color: #F0F0F0;
 }
+
+.btn-facebook, .btn-facebook:active, .btn-facebook:focus, .btn-facebook:visited {
+    color: #FFF;
+    background-color: #3B5998;
+    border-color: #8b9dc3;
+}
+.btn-facebook:hover {
+    border-color: #3B5998;
+    background-color: #8b9dc3;
+}

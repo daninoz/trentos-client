@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-      .module('trentos', ['satellizer', 'ui.router', 'toastr', 'ngAnimate', 'ui.bootstrap', 'angularMoment'])
+      .module('trentos', ['satellizer', 'ui.router', 'toastr', 'ngAnimate', 'ui.bootstrap', 'angularMoment', 'chart.js'])
       .config(config)
       .run(runBlock);
 
@@ -26,7 +26,7 @@
           }
         })
         .state('events', {
-          url: '/events',
+          url: '/eventos',
           templateUrl: 'app/partials/events.html',
           controller: 'EventsController',
           controllerAs: 'vm',
@@ -35,9 +35,18 @@
           }
         })
         .state('sports', {
-          url: '/sports/:sportId',
+          url: '/deportes/:sportId',
           templateUrl: 'app/partials/sports.html',
           controller: 'SportsController',
+          controllerAs: 'vm',
+          resolve: {
+            loginRequired: loginRequired
+          }
+        })
+        .state('statistics', {
+          url: '/estadisticas',
+          templateUrl: 'app/partials/statistics.html',
+          controller: 'StatisticsController',
           controllerAs: 'vm',
           resolve: {
             loginRequired: loginRequired
@@ -65,7 +74,7 @@
       return deferred.promise;
     }
 
-    function loginRequired ($rootScope, $http, $q, $location, $auth) {
+    function loginRequired ($rootScope, $http, $q, $auth) {
       var deferred = $q.defer();
       if ($auth.isAuthenticated()) {
         if (!$rootScope.user) {
@@ -77,7 +86,7 @@
           deferred.resolve();
         }
       } else {
-        $location.path('/login');
+        $state.go('login');
       }
       return deferred.promise;
     }

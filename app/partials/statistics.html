@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>Estadisticas</h1>
+  <div class="panel panel-default" ng-show="vm.pieChart">
+    <div class="panel-heading">Eventos por Deporte</div>
+    <div class="panel-body">
+      <canvas id="pie" class="chart chart-pie"
+          chart-data="vm.pieChart.data"
+          chart-labels="vm.pieChart.labels">
+      </canvas>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-show="vm.barChart">
+    <div class="panel-heading">Comentarios y Me Gusta por Deporte</div>
+    <div class="panel-body">
+      <canvas id="bar" class="chart chart-bar"
+          chart-data="vm.barChart.data"
+          chart-labels="vm.barChart.labels"
+          chart-series="vm.barChart.series">
+      </canvas>
+    </div>
+  </div>
+</div>

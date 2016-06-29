@@ -10,6 +10,8 @@
   <script src="node_modules/moment/min/moment.min.js"></script>
   <script src="node_modules/moment/locale/es.js"></script>
   <script src="node_modules/angular-moment/angular-moment.min.js"></script>
+  <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 
   <script src="app/app.js"></script>
   <script src="app/controllers/events.js"></script>
@@ -19,12 +21,14 @@
   <script src="app/controllers/add_event.js"></script>
   <script src="app/controllers/sports.js"></script>
   <script src="app/controllers/edit_event.js"></script>
+  <script src="app/controllers/statistics.js"></script>
 
   <script src="app/filters/lisp-case.js"></script>
 
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css">
   <link rel="stylesheet" href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="app/styles/styles.css">
 
   <title>Trentos</title>
@@ -44,7 +48,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="dropdown" uib-dropdown>
+          <li class="dropdown" uib-dropdown ng-show="vm.isAuthenticated()">
             <a href uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">Deportes <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
@@ -52,6 +56,9 @@
                 <a href ui-sref="sports({sportId: sport.id})">{{ sport.name }}</a></li>
             </ul>
           </li>
+          <li><a ui-sref="statistics" ng-show="vm.isAuthenticated()">
+            Estadisticas
+          </a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="bg-success"><a class="text-success" ng-click="vm.openAddEventModal()" href=""

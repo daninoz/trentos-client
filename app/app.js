@@ -47,7 +47,8 @@
     $urlRouterProvider.otherwise('/');
 
     $authProvider.facebook({
-      clientId: '1040065426062280'
+      clientId: '1040065426062280',
+      url: '/api/auth/facebook',
     });
 
     angular.extend(toastrConfig, {

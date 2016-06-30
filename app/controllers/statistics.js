@@ -43,8 +43,6 @@
           })()
         };
 
-        console.log(vm.pieChart);
-
         vm.barChart = {
           labels: vm.sports.map(function (sport) {
             return sport.name;

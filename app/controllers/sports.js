@@ -5,8 +5,8 @@
       .module('trentos')
       .controller('SportsController', SportsController);
 
-  SportsController.$inject = ['$rootScope', '$auth', '$http', '$stateParams'];
-  function SportsController ($rootScope, $auth, $http, $stateParams) {
+  SportsController.$inject = ['$rootScope', '$auth', '$http', '$stateParams', '$uibModal'];
+  function SportsController ($rootScope, $auth, $http, $stateParams, $uibModal) {
 
     var vm = this;
 

@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" ng-click="vm.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">Únete a Trentos</h3>
+  <span class="text-danger" ng-show="vm.error && !vm.user.email">{{ vm.error }}</span>
+</div>
+<div class="modal-body">
+  <form name="vm.form" novalidate>
+    <div class="form-group">
+      <input type="text" class="form-control" id="name" name="name" required
+          ng-model="vm.user.name" placeholder="Nombre completo">
+      <span class="help-block text-danger"
+          ng-show="vm.form.name.$dirty && vm.form.name.$invalid">
+        <span ng-show="vm.form.name.$dirty && vm.form.name.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control" id="email" name="email" required
+          ng-model="vm.user.email" placeholder="Direccion de Email">
+      <span class="help-block text-danger"
+          ng-show="vm.form.email.$dirty && vm.form.email.$invalid">
+        <span ng-show="vm.form.email.$dirty && vm.form.email.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+        <span ng-show="vm.form.email.$dirty && vm.form.email.$error.email"
+            class="text-danger">
+          Este campo debe ser un email valido.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control" id="email_2" name="email_2" required match="vm.user.email"
+          ng-model="vm.user.email_2" placeholder="Confirma tu Email">
+      <span class="help-block text-danger"
+          ng-show="vm.form.email_2.$dirty && vm.form.email_2.$invalid">
+        <span ng-show="vm.form.email_2.$dirty && vm.form.email_2.$error.match"
+            class="text-danger">
+          Los emails no coinciden.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="password" name="password" required
+          ng-model="vm.user.password" placeholder="Contraseña">
+      <span class="help-block text-danger"
+          ng-show="vm.form.password.$dirty && vm.form.password.$invalid">
+        <span ng-show="vm.form.password.$dirty && vm.form.password.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="password_2" name="password_2" match="vm.user.password" required
+          ng-model="vm.user.password_2" placeholder="Repite tu contraseña">
+      <span class="help-block text-danger"
+          ng-show="vm.form.password_2.$dirty && vm.form.password_2.$invalid">
+        <span ng-show="vm.form.password_2.$dirty && vm.form.password_2.$error.match"
+            class="text-danger">
+          Los passwords no coinciden.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label>Sube una foto:</label>
+      <button class="btn btn-primary" browse-file="{ accept: '.jpg' }">
+        Elegir
+      </button>
+      <input type="text" class="form-control" ng-model="vm.user.avatar.name"
+          ng-show="vm.user.avatar.name" readonly>
+    </div>
+    <div class="form-group">
+      <label>Escoge tus deportes a seguir</label><br/>
+      <div class="btn-group">
+        <input type="hidden" name="selectedSports" id="selectedSports" required ng-model="vm.sportsString">
+        <label ng-repeat="sport in vm.sports" class="btn btn-info" ng-model="vm.selectedSports[sport.id]"
+            ng-click="vm.toggleSports(sport.id)" uib-btn-checkbox>
+          {{ sport.name }}
+        </label>
+        <span class="help-block text-danger"
+            ng-show="vm.form.selectedSports.$dirty && vm.form.selectedSports.$error.required">
+          <span class="text-danger">
+            Debes elegir al menos 1 deporte.
+          </span>
+        </span>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" ng-click="vm.register()"
+        ng-disabled="vm.form.$invalid || vm.form.$pristine">Regístrate</button>
+  </form>
+</div>
+<div class="modal-footer">
+  ¿Ya tienes cuenta? <a href="#">Inicia sesion</a>.
+</div>

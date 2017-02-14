@@ -2,7 +2,16 @@
   'use strict';
 
   angular
-      .module('trentos', ['satellizer', 'ui.router', 'toastr', 'ngAnimate', 'ui.bootstrap', 'angularMoment', 'chart.js'])
+      .module('trentos', [
+          'satellizer',
+          'ui.router',
+          'toastr',
+          'ngAnimate',
+          'ui.bootstrap',
+          'angularMoment',
+          'chart.js',
+          'validation.match'
+      ])
       .config(config)
       .run(runBlock);
 
@@ -55,10 +64,7 @@
 
     $urlRouterProvider.otherwise('/');
 
-    $authProvider.facebook({
-      clientId: '1040065426062280',
-      url: '/api/auth/facebook',
-    });
+    $authProvider.loginUrl = '/api/auth/login';
 
     angular.extend(toastrConfig, {
       positionClass: 'toast-bottom-right'

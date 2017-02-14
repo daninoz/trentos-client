@@ -12,8 +12,12 @@
   <script src="node_modules/angular-moment/angular-moment.min.js"></script>
   <script src="node_modules/chart.js/dist/Chart.min.js"></script>
   <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="node_modules/angular-validation-match/dist/angular-validation-match.min.js"></script>
 
   <script src="app/app.js"></script>
+
+  <script src="app/components/browseFile/browseFile.js"></script>
+
   <script src="app/controllers/events.js"></script>
   <script src="app/controllers/home.js"></script>
   <script src="app/controllers/login.js"></script>
@@ -21,6 +25,7 @@
   <script src="app/controllers/add_event.js"></script>
   <script src="app/controllers/sports.js"></script>
   <script src="app/controllers/edit_event.js"></script>
+  <script src="app/controllers/register.js"></script>
   <script src="app/controllers/statistics.js"></script>
 
   <script src="app/filters/lisp-case.js"></script>
@@ -53,22 +58,25 @@
                 aria-haspopup="true" aria-expanded="false">Deportes <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li ng-repeat="sport in vm.sports">
-                <a href ui-sref="sports({sportId: sport.id})">{{ sport.name }}</a></li>
+                <a href ui-sref="sports({sportId: sport.id})">{{ sport.name }}</a>
+              </li>
             </ul>
           </li>
           <li><a ui-sref="statistics" ng-show="vm.isAuthenticated()">
             Estadisticas
           </a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="bg-success"><a class="text-success" ng-click="vm.openAddEventModal()" href=""
-              ng-show="vm.isAuthenticated()">
+        <ul class="nav navbar-nav navbar-right" ng-show="vm.isAuthenticated()">
+          <li class="bg-success"><a class="text-success" ng-click="vm.openAddEventModal()" href="">
             Agregar Evento <span class="sr-only">(current)</span></a>
           </li>
-          <li class="bg-danger"><a class="text-danger" ng-click="vm.logout()" href=""
-              ng-show="vm.isAuthenticated()">
+          <li class="bg-danger"><a class="text-danger" ng-click="vm.logout()" href="">
             Salir <span class="sr-only">(current)</span></a>
           </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-show="!vm.isAuthenticated()">
+          <li class="bg-info"><a class="text-info" ng-click="vm.openRegisterModal()" href="">
+            Registrate <span class="sr-only">(current)</span></a>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

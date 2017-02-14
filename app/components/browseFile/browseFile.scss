@@ -1,0 +1,14 @@
+.browse-file {
+  overflow: hidden;
+  position: relative;
+  input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+}

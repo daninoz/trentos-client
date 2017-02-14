@@ -11,6 +11,7 @@
 
     vm.isAuthenticated = isAuthenticated;
     vm.openAddEventModal = openAddEventModal;
+    vm.openRegisterModal = openRegisterModal;
     vm.logout = logout;
 
     getSports();
@@ -29,6 +30,18 @@
 
       modalInstance.result.then(function () {
         $rootScope.$broadcast('newEvent');
+      });
+    }
+
+    function openRegisterModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/register.html',
+        controller: 'RegisterController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        $state.go('events');
       });
     }
 

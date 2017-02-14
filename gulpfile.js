@@ -6,7 +6,7 @@ gulp.task('connect', function () {
   connect.server({
     root: './',
     host: 'local.trentos.app',
-    port: 9000,
+    port: 9090,
     livereload: true,
     middleware: function () {
       return [

@@ -19,6 +19,7 @@
   <script src="app/components/browseFile/browseFile.js"></script>
 
   <script src="app/controllers/events.js"></script>
+  <script src="app/controllers/feed.js"></script>
   <script src="app/controllers/home.js"></script>
   <script src="app/controllers/login.js"></script>
   <script src="app/controllers/navbar.js"></script>
@@ -49,7 +50,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Trentos</a>
+        <a class="navbar-brand" ui-sref="feed">Trentos</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -62,6 +63,9 @@
               </li>
             </ul>
           </li>
+          <li><a ui-sref="events" ng-show="vm.isAuthenticated()">
+            Todos los eventos
+          </a></li>
           <li><a ui-sref="statistics" ng-show="vm.isAuthenticated()">
             Estadisticas
           </a></li>

@@ -24,12 +24,12 @@
       });
 
       modalInstance.result.then(function () {
-        $state.go('events');
+        $state.go('feed');
       });
     }
 
     if ($auth.isAuthenticated()) {
-      $state.go('events');
+      $state.go('feed');
     }
 
   }

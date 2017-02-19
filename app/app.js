@@ -43,6 +43,15 @@
             loginRequired: loginRequired
           }
         })
+        .state('feed', {
+          url: '/feed',
+          templateUrl: 'app/partials/feed.html',
+          controller: 'FeedController',
+          controllerAs: 'vm',
+          resolve: {
+            loginRequired: loginRequired
+          }
+        })
         .state('sports', {
           url: '/deportes/:sportId',
           templateUrl: 'app/partials/sports.html',

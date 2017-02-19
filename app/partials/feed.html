@@ -1,7 +1,7 @@
 <div class="container">
   <div class="feed">
     <div class="alert alert-warning" role="alert" ng-show="vm.events.length === 0">
-      Aun no hay eventos cargados de este deporte
+      Aun no hay eventos cargados
     </div>
     <div class="status panel panel-default {{ event.sport.name | lispCase }}" ng-repeat="event in vm.events"
         ng-class="{'highlight': event.highlight}">

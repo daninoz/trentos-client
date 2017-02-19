@@ -24,6 +24,7 @@
   <script src="app/controllers/login.js"></script>
   <script src="app/controllers/navbar.js"></script>
   <script src="app/controllers/add_event.js"></script>
+  <script src="app/controllers/manage_sports.js"></script>
   <script src="app/controllers/sports.js"></script>
   <script src="app/controllers/edit_event.js"></script>
   <script src="app/controllers/register.js"></script>
@@ -66,13 +67,19 @@
           <li><a ui-sref="events" ng-show="vm.isAuthenticated()">
             Todos los eventos
           </a></li>
-          <li><a ui-sref="statistics" ng-show="vm.isAuthenticated()">
+          <li><a ui-sref="statistics" ng-show="vm.isAuthenticated() && vm.isAdmin()"
+              class="hidden-sm">
             Estadisticas
           </a></li>
+          <li><a ui-sref="statistics" class="glyphicon glyphicon-stats hidden-lg hidden-md"
+              ng-show="vm.isAuthenticated() && vm.isAdmin()"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="vm.isAuthenticated()">
           <li class="bg-success"><a class="text-success" ng-click="vm.openAddEventModal()" href="">
             Agregar Evento <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="bg-info"><a class="text-info" ng-click="vm.openManageSportsModal()" href="">
+            Mis Deportes <span class="sr-only">(current)</span></a>
           </li>
           <li class="bg-danger"><a class="text-danger" ng-click="vm.logout()" href="">
             Salir <span class="sr-only">(current)</span></a>

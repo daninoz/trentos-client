@@ -10,7 +10,9 @@
     var vm = this;
 
     vm.isAuthenticated = isAuthenticated;
+    vm.isAdmin = isAdmin;
     vm.openAddEventModal = openAddEventModal;
+    vm.openManageSportsModal = openManageSportsModal;
     vm.openRegisterModal = openRegisterModal;
     vm.logout = logout;
 
@@ -19,6 +21,10 @@
 
     function isAuthenticated () {
       return $auth.isAuthenticated();
+    }
+
+    function isAdmin () {
+      return $rootScope.user && $rootScope.user.is_admin;
     }
 
     function openAddEventModal () {
@@ -30,6 +36,18 @@
 
       modalInstance.result.then(function () {
         $rootScope.$broadcast('newEvent');
+      });
+    }
+
+    function openManageSportsModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/manage_sports.html',
+        controller: 'ManageSportsController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        $state.go('feed');
       });
     }
 

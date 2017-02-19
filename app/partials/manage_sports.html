@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" ng-click="vm.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">Elige tus deportes</h3>
+</div>
+<div class="modal-body">
+  <form name="vm.form" novalidate>
+    <div class="form-group">
+      <label>Escoge tus deportes a seguir</label><br/>
+      <div class="btn-group">
+        <input type="hidden" name="selectedSports" id="selectedSports" required ng-model="vm.sportsString">
+        <label ng-repeat="sport in vm.sports" class="btn btn-info" ng-model="vm.selectedSports[sport.id]"
+            ng-click="vm.toggleSports(sport.id)" uib-btn-checkbox>
+          {{ sport.name }}
+        </label>
+        <span class="help-block text-danger"
+            ng-show="vm.form.selectedSports.$dirty && vm.form.selectedSports.$error.required">
+          <span class="text-danger">
+            Debes elegir al menos 1 deporte.
+          </span>
+        </span>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" ng-click="vm.update()"
+        ng-disabled="vm.form.$invalid || vm.form.$pristine">Actualizar</button>
+  </form>
+</div>

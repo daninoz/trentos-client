@@ -1,34 +1,37 @@
 <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" ng-click="vm.cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <h3 class="modal-title">Editar Evento</h3>
 </div>
 <div class="modal-body">
   <form>
     <div class="form-group">
       <label>Descripcion</label>
-      <textarea class="form-control" rows="3" ng-model="vm.event.description"></textarea>
-    </div>
-    <div class="form-group">
-      <label>Fecha</label>
-      <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{vm.dateFormat}}" ng-model="vm.event.date"
-            is-open="vm.datePopup.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Cerrar" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="vm.openDatePopup()">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-      </p>
+      <textarea class="form-control" name="descripcion" id="descripcion" required
+          rows="3" ng-model="vm.event.description"></textarea>
+      <span class="help-block text-danger"
+          ng-show="vm.form.descripcion.$dirty && vm.form.descripcion.$invalid">
+        <span ng-show="vm.form.descripcion.$dirty && vm.form.descripcion.$error.required"
+            class="text-danger">
+          Este campo es obligatorio
+        </span>
+      </span>
     </div>
     <div class="form-group">
       <label>Deporte</label>
-      <select ng-model="vm.event.sport_id" ng-options="sport.id as sport.name for sport in vm.sports"
-          class="form-control">
+      <select name="sports" id="sports" ng-model="vm.event.sport_id" required
+          ng-options="sport.id as sport.name for sport in vm.sports" class="form-control">
         <option value="">Elegir deporte</option>
       </select>
+      <span class="help-block text-danger"
+          ng-show="vm.form.sports.$dirty && vm.form.sports.$error.required">
+        <span class="text-danger">
+          Debes elegir un deporte.
+        </span>
+      </span>
     </div>
+    <button class="btn btn-primary" type="button" ng-click="vm.edit()"
+        ng-disabled="vm.form.$invalid || vm.form.$pristine">Actualizar</button>
   </form>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="vm.edit()">Actualizar</button>
-  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancelar</button>
 </div>

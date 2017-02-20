@@ -11,10 +11,8 @@
 
     vm.cancel = cancel;
     vm.edit = edit;
-    vm.openDatePopup = openDatePopup;
 
     getSports();
-    setDateConfig();
 
     function cancel () {
       $uibModalInstance.dismiss();
@@ -26,16 +24,11 @@
       });
     }
 
-    function openDatePopup () {
-      vm.datePopup.opened = true;
-    }
-
     function getEvent () {
       $http.get('/api/events/' + eventId).then(function (response) {
         vm.event = response.data;
         vm.event.sport_id = vm.event.sport.id;
         delete vm.event.sport;
-        vm.event.date = new Date(vm.event.date);
       });
     }
 
@@ -50,18 +43,6 @@
         vm.sports = response.data;
         getEvent();
       });
-    }
-
-    function setDateConfig () {
-      vm.dateFormat = 'dd/MM/yyyy';
-      vm.datePopup = {
-        opened: false
-      };
-      vm.dateOptions = {
-        formatYear: 'yyyy',
-        minDate: new Date(),
-        startingDay: 1
-      };
     }
 
   }

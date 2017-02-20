@@ -43,6 +43,10 @@ body {
     background-image: url('../images/backgrounds/running.png');
 }
 
+.feed .status.ciclismo-de-ruta .panel-heading {
+    background-image: url('../images/backgrounds/running.png');
+}
+
 .feed .status .panel-heading .thumbnail {
     max-width: 100px;
     display: inline-block;

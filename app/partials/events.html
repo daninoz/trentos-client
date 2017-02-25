@@ -20,7 +20,7 @@
           <div>
             {{ event.description }}
           </div>
-          <button class="btn btn-primary" type="button" ng-click="vm.like(event.id)">
+          <button class="btn btn-primary" type="button" ng-click="vm.isAuthenticated() && vm.like(event.id)">
             Me gusta <span class="badge">{{ event.likes.length }}</span>
           </button>
           <button class="btn btn-success" type="button"
@@ -28,19 +28,19 @@
             Comentarios <span class="badge">{{ event.comments.length }}</span>
           </button>
           <button class="btn btn-danger" type="button" ng-click="vm.remove(event.id)"
-              ng-show="vm.isAuthor(event.user.id) || vm.isAdmin()">
+              ng-show="vm.isAuthenticated() && (vm.isAuthor(event.user.id) || vm.isAdmin())">
             Eliminar
           </button>
           <button class="btn btn-info" type="button" ng-click="vm.edit(event.id)"
-              ng-show="vm.isAuthor(event.user.id) || vm.isAdmin()">
+              ng-show="vm.isAuthenticated() && (vm.isAuthor(event.user.id) || vm.isAdmin())">
             Editar
           </button>
           <button class="btn btn-warning" type="button" ng-click="vm.highlight(event.id)"
-              ng-show="vm.isAdmin() && !event.highlight">
+              ng-show="vm.isAuthenticated() && vm.isAdmin() && !event.highlight">
             Destacar
           </button>
           <button class="btn btn-warning" type="button" ng-click="vm.highlight(event.id)"
-              ng-show="vm.isAdmin() && event.highlight">
+              ng-show="vm.isAuthenticated() && vm.isAdmin() && event.highlight">
             Quitar Destacado
           </button>
         </div>
@@ -48,7 +48,7 @@
       <div class="panel-footer comments" ng-show="event.comments.length && vm.displayComments[event.id]">
         <div class="comment" ng-repeat="comment in event.comments">
           <a href="#" class="thumbnail">
-            <img ng-src="//graph.facebook.com/{{ comment.user.facebook }}/picture?type=large"
+            <img ng-src="/public/images/{{ comment.user.id }}/{{ comment.user.avatar }}"
                 alt="{{ comment.user.name }}">
           </a>
           <div>
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer" ng-if="vm.isAuthenticated()">
         <form class="row">
           <div class="col-xs-8 col-sm-10">
             <input type="text" class="form-control" ng-model="vm.comments[event.id]" placeholder="Escribe algo...">

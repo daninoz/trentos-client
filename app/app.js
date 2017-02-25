@@ -19,12 +19,6 @@
   function config ($authProvider, $stateProvider, $urlRouterProvider, toastrConfig) {
 
     $stateProvider
-        .state('home', {
-          url: '/',
-          controller: 'HomeController',
-          controllerAs: 'vm',
-          templateUrl: 'app/partials/home.html'
-        })
         .state('login', {
           url: '/login',
           templateUrl: 'app/partials/login.html',
@@ -38,10 +32,7 @@
           url: '/eventos',
           templateUrl: 'app/partials/events.html',
           controller: 'EventsController',
-          controllerAs: 'vm',
-          resolve: {
-            loginRequired: loginRequired
-          }
+          controllerAs: 'vm'
         })
         .state('feed', {
           url: '/feed',
@@ -71,7 +62,7 @@
           }
         });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/eventos');
 
     $authProvider.loginUrl = '/api/auth/login';
 

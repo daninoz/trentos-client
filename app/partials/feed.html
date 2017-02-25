@@ -48,7 +48,7 @@
       <div class="panel-footer comments" ng-show="event.comments.length && vm.displayComments[event.id]">
         <div class="comment" ng-repeat="comment in event.comments">
           <a href="#" class="thumbnail">
-            <img ng-src="//graph.facebook.com/{{ comment.user.facebook }}/picture?type=large"
+            <img ng-src="/public/images/{{ comment.user.id }}/{{ comment.user.avatar }}"
                 alt="{{ comment.user.name }}">
           </a>
           <div>

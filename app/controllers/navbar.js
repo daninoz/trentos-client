@@ -13,6 +13,7 @@
     vm.isAdmin = isAdmin;
     vm.openAddEventModal = openAddEventModal;
     vm.openManageSportsModal = openManageSportsModal;
+    vm.openLoginModal = openLoginModal;
     vm.openRegisterModal = openRegisterModal;
     vm.logout = logout;
 
@@ -43,6 +44,18 @@
       var modalInstance = $uibModal.open({
         templateUrl: 'app/partials/manage_sports.html',
         controller: 'ManageSportsController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        $state.go('feed');
+      });
+    }
+
+    function openLoginModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/login.html',
+        controller: 'LoginController',
         controllerAs: 'vm'
       });
 

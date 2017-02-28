@@ -37,7 +37,7 @@
       });
 
       modalInstance.result.then(function () {
-        $rootScope.$broadcast('newEvent');
+        $rootScope.$broadcast('eventsUpdated');
       });
     }
 

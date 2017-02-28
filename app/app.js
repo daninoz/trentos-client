@@ -19,15 +19,6 @@
   function config ($authProvider, $stateProvider, $urlRouterProvider, toastrConfig) {
 
     $stateProvider
-        .state('login', {
-          url: '/login',
-          templateUrl: 'app/partials/login.html',
-          controller: 'LoginController',
-          controllerAs: 'vm',
-          resolve: {
-            skipIfLoggedIn: skipIfLoggedIn
-          }
-        })
         .state('events', {
           url: '/eventos',
           templateUrl: 'app/partials/events.html',
@@ -36,7 +27,7 @@
         })
         .state('feed', {
           url: '/feed',
-          templateUrl: 'app/partials/feed.html',
+          templateUrl: 'app/partials/events.html',
           controller: 'FeedController',
           controllerAs: 'vm',
           resolve: {
@@ -45,7 +36,7 @@
         })
         .state('sports', {
           url: '/deportes/:sportId',
-          templateUrl: 'app/partials/sports.html',
+          templateUrl: 'app/partials/events.html',
           controller: 'SportsController',
           controllerAs: 'vm',
           resolve: {
@@ -85,7 +76,7 @@
       return deferred.promise;
     }
 
-    function loginRequired ($rootScope, $http, $q, $auth) {
+    function loginRequired ($rootScope, $http, $q, $auth, $state) {
       var deferred = $q.defer();
       if ($auth.isAuthenticated()) {
         if (!$rootScope.user) {
@@ -97,7 +88,7 @@
           deferred.resolve();
         }
       } else {
-        $state.go('login');
+        $state.go('events');
       }
       return deferred.promise;
     }

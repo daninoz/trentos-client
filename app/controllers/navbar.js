@@ -79,7 +79,7 @@
     function logout () {
       $auth.logout().then(function () {
         toastr.info('Has cerrado sesion');
-        $state.go('home');
+        $state.go('events');
       });
     }
 

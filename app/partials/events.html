@@ -1,7 +1,7 @@
 <div class="container">
   <div class="feed">
     <div class="alert alert-warning" role="alert" ng-show="vm.events.length === 0">
-      Aun no hay eventos cargados
+      {{ vm.message }}
     </div>
     <div class="status panel panel-default {{ event.sport.name | lispCase }}" ng-repeat="event in vm.events"
       ng-class="{'highlight': event.highlight}">
@@ -22,7 +22,7 @@
           <div>
             {{ event.description }}
           </div>
-          <button class="btn btn-primary" type="button" ng-click="vm.isAuthenticated() && vm.like(event.id)">
+          <button class="btn btn-primary" type="button" ng-click="vm.isAuthenticated() && vm.like(event.id, vm)">
             Me gusta <span class="badge">{{ event.likes.length }}</span>
           </button>
           <button class="btn btn-success" type="button"
@@ -66,7 +66,7 @@
           <div class="col-xs-8 col-sm-10">
             <input type="text" class="form-control" ng-model="vm.comments[event.id]" placeholder="Escribe algo...">
           </div>
-          <button type="submit" class="btn btn-default" ng-click="vm.comment(event.id)">Comentar</button>
+          <button type="submit" class="btn btn-default" ng-click="vm.comment(event.id, vm)">Comentar</button>
         </form>
       </div>
     </div>

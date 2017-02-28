@@ -10,19 +10,19 @@
     var vm = this;
 
     vm.event = {};
-    vm.cancel = cancel;
     vm.add = add;
+    vm.cancel = cancel;
 
     getSports();
-
-    function cancel () {
-      $uibModalInstance.dismiss();
-    }
 
     function add () {
       $http.post('/api/events', vm.event).then(function () {
         $uibModalInstance.close();
       });
+    }
+
+    function cancel () {
+      $uibModalInstance.dismiss();
     }
 
     function getSports () {

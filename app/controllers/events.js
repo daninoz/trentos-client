@@ -5,43 +5,28 @@
       .module('trentos')
       .controller('EventsController', EventsController);
 
-  EventsController.$inject = ['$rootScope', '$auth', '$http', '$uibModal'];
-  function EventsController ($rootScope, $auth, $http, $uibModal) {
+  EventsController.$inject = ['$rootScope', 'userService', 'eventsService', '$auth', '$uibModal'];
+  function EventsController ($rootScope, userService, eventsService, $auth, $uibModal) {
 
     var vm = this;
 
-    vm.isAuthenticated = isAuthenticated;
-    vm.isAuthor = isAuthor;
-    vm.isAdmin = isAdmin;
-    vm.like = like;
-    vm.comment = comment;
-    vm.remove = remove;
+    vm.isAuthenticated = $auth.isAuthenticated;
+    vm.isAuthor = userService.isAuthor;
+    vm.isAdmin = userService.isAdmin;
+    vm.like = eventsService.like;
+    vm.comment = eventsService.comment;
+    vm.remove = eventsService.remove;
     vm.edit = edit;
-    vm.highlight = highlight;
+    vm.highlight = eventsService.highlight;
     vm.comments = [];
     vm.displayComments = [];
+    vm.message = "Aun no hay eventos cargados";
 
-    getEvents();
+    eventsService.getEvents(vm);
 
-    $rootScope.$on('newEvent', getEvents);
-
-    function getEvents () {
-      $http.get('/api/events').then(function (response) {
-        vm.events = response.data;
-      });
-    }
-
-    function remove (eventId) {
-      $http.delete('/api/events/' + eventId).then(function (response) {
-        getEvents();
-      });
-    }
-
-    function highlight (eventId) {
-      $http.patch('/api/events/' + eventId).then(function (response) {
-        getEvents();
-      });
-    }
+    $rootScope.$on('eventsUpdated', function () {
+      eventsService.getEvents(vm);
+    });
 
     function edit (eventId) {
       var modalInstance = $uibModal.open({
@@ -56,43 +41,8 @@
       });
 
       modalInstance.result.then(function () {
-        $rootScope.$broadcast('newEvent');
+        $rootScope.$broadcast('eventsUpdated');
       });
-    }
-
-    function isAuthenticated () {
-      return $auth.isAuthenticated();
-    }
-
-    function isAuthor(userId) {
-      if ($rootScope.user.id) {
-        return $rootScope.user.id === userId;
-      }
-    }
-
-    function isAdmin() {
-      if ($rootScope.user.id) {
-        return $rootScope.user.is_admin;
-      }
-    }
-
-    function like (id) {
-      $http.put('/api/events/' + id + '/likes', {}).then(function (response) {
-        getEventById(id).likes = response.data;
-      });
-    }
-
-    function comment (id) {
-      $http.post('/api/events/' + id + '/comments', {comment: vm.comments[id]}).then(function (response) {
-        getEventById(id).comments = response.data;
-        vm.comments[id] = '';
-      });
-    };
-
-    function getEventById (id) {
-      return vm.events.filter(function (event) {
-        return event.id === id;
-      })[0];
     }
 
   }

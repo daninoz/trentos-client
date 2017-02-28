@@ -14,12 +14,6 @@ body {
     color: #a94442 !important;
 }
 
-.jumbotron {
-    background-position: bottom;
-    background-image: url('../images/bgbig/running.jpg');
-    color: white;
-}
-
 .social-buttons {
     padding: 20px 15px 20px 15px;
     margin: 15px -15px -15px;

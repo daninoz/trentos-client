@@ -5,46 +5,28 @@
       .module('trentos')
       .controller('FeedController', FeedController);
 
-  FeedController.$inject = ['$rootScope', '$auth', '$http', '$uibModal', '$state'];
-  function FeedController ($rootScope, $auth, $http, $uibModal, $state) {
+  FeedController.$inject = ['$rootScope', 'eventsService', 'userService', '$auth', '$uibModal', '$state'];
+  function FeedController ($rootScope, eventsService, userService, $auth, $uibModal, $state) {
 
     var vm = this;
 
-    vm.isAuthenticated = isAuthenticated;
-    vm.isAuthor = isAuthor;
-    vm.isAdmin = isAdmin;
-    vm.like = like;
-    vm.comment = comment;
-    vm.remove = remove;
+    vm.isAuthenticated = $auth.isAuthenticated;
+    vm.isAuthor = userService.isAuthor;
+    vm.isAdmin = userService.isAdmin;
+    vm.like = eventsService.like;
+    vm.comment = eventsService.comment;
+    vm.remove = eventsService.remove;
     vm.edit = edit;
-    vm.highlight = highlight;
+    vm.highlight = eventsService.highlight;
     vm.comments = [];
     vm.displayComments = [];
+    vm.message = "Aun no elegiste tus deportes";
 
-    getEvents();
+    eventsService.getFeedEvents(vm, openManageSportsModal);
 
-    $rootScope.$on('newEvent', getEvents);
-
-    function getEvents () {
-      $http.get('/api/feed').then(function (response) {
-        vm.events = response.data;
-        if (!vm.events.length) {
-          openManageSportsModal();
-        }
-      });
-    }
-
-    function remove (eventId) {
-      $http.delete('/api/events/' + eventId).then(function (response) {
-        getEvents();
-      });
-    }
-
-    function highlight (eventId) {
-      $http.patch('/api/events/' + eventId).then(function (response) {
-        getEvents();
-      });
-    }
+    $rootScope.$on('eventsUpdated', function () {
+      eventsService.getFeedEvents(vm, openManageSportsModal);
+    });
 
     function edit (eventId) {
       var modalInstance = $uibModal.open({
@@ -61,41 +43,6 @@
       modalInstance.result.then(function () {
         $rootScope.$broadcast('newEvent');
       });
-    }
-
-    function isAuthenticated () {
-      return $auth.isAuthenticated();
-    }
-
-    function isAuthor(userId) {
-      if ($rootScope.user.id) {
-        return $rootScope.user.id === userId;
-      }
-    }
-
-    function isAdmin() {
-      if ($rootScope.user.id) {
-        return $rootScope.user.is_admin;
-      }
-    }
-
-    function like (id) {
-      $http.put('/api/events/' + id + '/likes', {}).then(function (response) {
-        getEventById(id).likes = response.data;
-      });
-    }
-
-    function comment (id) {
-      $http.post('/api/events/' + id + '/comments', {comment: vm.comments[id]}).then(function (response) {
-        getEventById(id).comments = response.data;
-        vm.comments[id] = '';
-      });
-    }
-
-    function getEventById (id) {
-      return vm.events.filter(function (event) {
-        return event.id === id;
-      })[0];
     }
 
     function openManageSportsModal () {

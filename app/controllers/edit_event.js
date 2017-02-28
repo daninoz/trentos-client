@@ -32,17 +32,17 @@
       });
     }
 
-    function getSportById (id) {
-      return vm.sports.filter(function (sport) {
-        return sport.id === id;
-      })[0];
-    }
-
     function getSports () {
       $http.get('/api/sports').then(function (response) {
         vm.sports = response.data;
         getEvent();
       });
+    }
+
+    function getSportById (id) {
+      return vm.sports.filter(function (sport) {
+        return sport.id === id;
+      })[0];
     }
 
   }

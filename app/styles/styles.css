@@ -117,6 +117,10 @@ body {
     background-color: #F0F0F0;
 }
 
+.feed > .btn {
+    margin-bottom: 20px;
+}
+
 .btn-facebook, .btn-facebook:active, .btn-facebook:focus, .btn-facebook:visited {
     color: #FFF;
     background-color: #3B5998;

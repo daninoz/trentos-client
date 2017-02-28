@@ -8,6 +8,10 @@
   eventsService.$inject = ['$timeout', '$http', '$rootScope'];
   function eventsService ($timeout, $http, $rootScope) {
 
+    var url,
+        sportsUrl,
+        feedUrl;
+
     function getEventById (id, vm) {
       return vm.events.filter(function (event) {
         return event.id === id;
@@ -24,19 +28,46 @@
       displayMap: function (id) {
         this.visibleMaps[id] = !this.visibleMaps[id];
       },
-      getEvents: function (vm) {
-        $http.get('/api/events').then(function (response) {
-          vm.events = response.data;
+      getEvents: function (vm, restart) {
+        if (restart) {
+          vm.events = [];
+          url = '/api/events';
+          vm.loadMoreEnabled = true;
+        }
+        $http.get(url).then(function (response) {
+          url = response.data.next_page_url;
+          vm.events = vm.events.concat(response.data.data);
+          if (!response.data.next_page_url) {
+            vm.loadMoreEnabled = false;
+          }
         });
       },
-      getEventsBySport: function (vm, sportId) {
-        $http.get('/api/sports/' + sportId + '/events').then(function (response) {
-          vm.events = response.data;
+      getEventsBySport: function (vm, sportId, restart) {
+        if (restart) {
+          vm.events = [];
+          sportsUrl = '/api/sports/' + sportId + '/events';
+          vm.loadMoreEnabled = true;
+        }
+        $http.get(sportsUrl).then(function (response) {
+          sportsUrl = response.data.next_page_url;
+          vm.events = vm.events.concat(response.data.data);
+          if (!response.data.next_page_url) {
+            vm.loadMoreEnabled = false;
+          }
         });
       },
-      getFeedEvents: function (vm, openManageSportsModal) {
-        $http.get('/api/feed').then(function (response) {
-          vm.events = response.data;
+      getFeedEvents: function (vm, openManageSportsModal, restart) {
+        if (restart) {
+          vm.events = [];
+          feedUrl = '/api/feed';
+          vm.loadMoreEnabled = true;
+        }
+        $http.get(feedUrl).then(function (response) {
+          sportsUrl = response.data.next_page_url;
+          vm.events = vm.events.concat(response.data.data);
+          if (!response.data.next_page_url) {
+            vm.loadMoreEnabled = false;
+          }
           if (!vm.events.length) {
             openManageSportsModal();
           }

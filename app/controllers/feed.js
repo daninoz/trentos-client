@@ -19,15 +19,16 @@
     vm.edit = edit;
     vm.highlight = eventsService.highlight;
     vm.displayMap = eventsService.displayMap;
+    vm.loadMore = loadMore;
     vm.visibleMaps = {};
     vm.comments = [];
     vm.displayComments = [];
     vm.message = "Aun no elegiste tus deportes";
 
-    eventsService.getFeedEvents(vm, openManageSportsModal);
+    eventsService.getFeedEvents(vm, openManageSportsModal, true);
 
     $rootScope.$on('eventsUpdated', function () {
-      eventsService.getFeedEvents(vm, openManageSportsModal);
+      eventsService.getFeedEvents(vm, openManageSportsModal, true);
     });
 
     function edit (eventId) {
@@ -57,6 +58,10 @@
       modalInstance.result.then(function () {
         $state.go('feed', undefined, {reload: true});
       });
+    }
+
+    function loadMore() {
+      eventsService.getFeedEvents(vm, openManageSportsModal);
     }
 
   }

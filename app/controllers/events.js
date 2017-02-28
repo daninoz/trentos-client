@@ -19,15 +19,16 @@
     vm.edit = edit;
     vm.highlight = eventsService.highlight;
     vm.displayMap = eventsService.displayMap;
+    vm.loadMore = loadMore;
     vm.visibleMaps = {};
     vm.comments = [];
     vm.displayComments = [];
     vm.message = "Aun no hay eventos cargados";
 
-    eventsService.getEvents(vm);
+    eventsService.getEvents(vm, true);
 
     $rootScope.$on('eventsUpdated', function () {
-      eventsService.getEvents(vm);
+      eventsService.getEvents(vm, true);
     });
 
     function edit (eventId) {
@@ -47,6 +48,9 @@
       });
     }
 
+    function loadMore() {
+      eventsService.getEvents(vm);
+    }
   }
 })();
 

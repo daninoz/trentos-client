@@ -19,15 +19,16 @@
     vm.edit = edit;
     vm.highlight = eventsService.highlight;
     vm.displayMap = eventsService.displayMap;
+    vm.loadMore = loadMore;
     vm.visibleMaps = {};
     vm.comments = [];
     vm.displayComments = [];
     vm.message = "Aun no hay eventos cargados de este deporte";
 
-    eventsService.getEventsBySport(vm, $stateParams.sportId);
+    eventsService.getEventsBySport(vm, $stateParams.sportId, true);
 
     $rootScope.$on('eventsUpdated', function () {
-      eventsService.getEventsBySport(vm, $stateParams.sportId);
+      eventsService.getEventsBySport(vm, $stateParams.sportId, true);
     });
 
     function edit (eventId) {
@@ -45,6 +46,10 @@
       modalInstance.result.then(function () {
         $rootScope.$broadcast('newEvent');
       });
+    }
+
+    function loadMore() {
+      eventsService.getEventsBySport(vm, $stateParams.sportId);
     }
 
   }

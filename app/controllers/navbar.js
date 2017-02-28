@@ -48,7 +48,7 @@
       });
 
       modalInstance.result.then(function () {
-        $state.go('feed');
+        $state.go('feed', undefined, {reload: true});
       });
     }
 

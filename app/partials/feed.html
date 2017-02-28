@@ -1,14 +1,16 @@
 <div class="container">
   <div class="feed">
     <div class="alert alert-warning" role="alert" ng-show="vm.events.length === 0">
-      Aun no hay eventos cargados
+      Aun no elegiste tus deportes
     </div>
     <div class="status panel panel-default {{ event.sport.name | lispCase }}" ng-repeat="event in vm.events"
         ng-class="{'highlight': event.highlight}">
       <div class="panel-heading">
         <a href="#" class="thumbnail">
+          <img ng-src="//graph.facebook.com/{{ event.user.facebook }}/picture?type=large"
+              ng-show="!event.user.avatar && event.user.facebook" alt="{{ event.user.displayName }}">
           <img ng-src="/public/images/{{ event.user.id }}/{{ event.user.avatar }}"
-              alt="{{ event.user.name }}">
+              ng-show="event.user.avatar" alt="{{ event.user.name }}">
         </a>
         <h3 class="panel-title">
           {{ event.user.name }}<br/>
@@ -48,8 +50,10 @@
       <div class="panel-footer comments" ng-show="event.comments.length && vm.displayComments[event.id]">
         <div class="comment" ng-repeat="comment in event.comments">
           <a href="#" class="thumbnail">
+            <img ng-src="//graph.facebook.com/{{ comment.user.facebook }}/picture?type=large"
+                ng-show="!comment.user.avatar && comment.user.facebook" alt="{{ comment.user.displayName }}">
             <img ng-src="/public/images/{{ comment.user.id }}/{{ comment.user.avatar }}"
-                alt="{{ comment.user.name }}">
+                ng-show="comment.user.avatar" alt="{{ comment.user.name }}">
           </a>
           <div>
             <p class="text-info ">{{ comment.user.name }}</p>

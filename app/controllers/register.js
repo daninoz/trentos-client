@@ -14,10 +14,39 @@
     };
     vm.selectedSports = [];
     vm.register = register;
+    vm.authenticate = authenticate;
     vm.cancel = cancel;
     vm.toggleSports = toggleSports;
 
     getSports();
+
+    function authenticate (provider) {
+      switch (provider) {
+        case 'facebook':
+          facebookAuthenticate();
+          break;
+      }
+    }
+    function facebookAuthenticate () {
+      $auth.authenticate('facebook')
+          .then(function () {
+            $rootScope.$broadcast('login');
+            $http.get('api/me').then(function (response) {
+              $rootScope.user = response.data;
+            });
+            toastr.success('Has ingresado exitosamente con facebook!');
+            $uibModalInstance.close();
+          })
+          .catch(function (error) {
+            if (error.error) {
+              toastr.error(error.error);
+            } else if (error.data) {
+              toastr.error(error.data.message, error.status);
+            } else {
+              toastr.error(error);
+            }
+          });
+    }
 
     function register (provider) {
       $http({

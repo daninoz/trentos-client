@@ -20,6 +20,12 @@ body {
     color: white;
 }
 
+.social-buttons {
+    padding: 20px 15px 20px 15px;
+    margin: 15px -15px -15px;
+    border-top: 1px solid #e5e5e5;
+}
+
 .feed {
     margin-top: 20px;
 }

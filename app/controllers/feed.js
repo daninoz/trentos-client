@@ -5,8 +5,8 @@
       .module('trentos')
       .controller('FeedController', FeedController);
 
-  FeedController.$inject = ['$rootScope', '$auth', '$http', '$uibModal'];
-  function FeedController ($rootScope, $auth, $http, $uibModal) {
+  FeedController.$inject = ['$rootScope', '$auth', '$http', '$uibModal', '$state'];
+  function FeedController ($rootScope, $auth, $http, $uibModal, $state) {
 
     var vm = this;
 
@@ -28,6 +28,9 @@
     function getEvents () {
       $http.get('/api/feed').then(function (response) {
         vm.events = response.data;
+        if (!vm.events.length) {
+          openManageSportsModal();
+        }
       });
     }
 
@@ -87,12 +90,24 @@
         getEventById(id).comments = response.data;
         vm.comments[id] = '';
       });
-    };
+    }
 
     function getEventById (id) {
       return vm.events.filter(function (event) {
         return event.id === id;
       })[0];
+    }
+
+    function openManageSportsModal () {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/partials/manage_sports.html',
+        controller: 'ManageSportsController',
+        controllerAs: 'vm'
+      });
+
+      modalInstance.result.then(function () {
+        $state.go('feed', undefined, {reload: true});
+      });
     }
 
   }

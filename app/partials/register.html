@@ -93,6 +93,9 @@
     <button type="submit" class="btn btn-success" ng-click="vm.register()"
         ng-disabled="vm.form.$invalid || vm.form.$pristine">Regístrate</button>
   </form>
+  <div class="social-buttons">
+    <button class="btn btn-facebook btn-block" ng-click="vm.authenticate('facebook')">Ingresa con Facebook</button>
+  </div>
 </div>
 <div class="modal-footer">
   ¿Ya tienes cuenta? <a href="#">Inicia sesion</a>.

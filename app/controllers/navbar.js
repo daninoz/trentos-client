@@ -9,6 +9,7 @@
   function NavbarController ($rootScope, $auth, $uibModal, $state, $http, toastr) {
     var vm = this;
 
+    vm.isNavCollapsed = true;
     vm.isAuthenticated = isAuthenticated;
     vm.isAdmin = isAdmin;
     vm.openAddEventModal = openAddEventModal;

@@ -24,30 +24,33 @@
           </div>
           <button class="btn btn-info" type="button" ng-click="vm.displayMap(event.id)"
               ng-show="event.location">
-            Ver Mapa
+            <span class="glyphicon glyphicon-map-marker visible-xs-inline"></span><span class="hidden-xs">Ver Mapa</span>
           </button>
           <button class="btn btn-primary" type="button" ng-click="vm.isAuthenticated() && vm.like(event.id, vm)">
-            Me gusta <span class="badge">{{ event.likes.length }}</span>
+            <span class="glyphicon glyphicon-thumbs-up visible-xs-inline"></span><span class="hidden-xs">Me gusta</span>
+            <span class="badge">{{ event.likes.length }}</span>
           </button>
           <button class="btn btn-success" type="button"
               ng-click="vm.displayComments[event.id] = !vm.displayComments[event.id]">
-            Comentarios <span class="badge">{{ event.comments.length }}</span>
+            <span class="glyphicon glyphicon-comment visible-xs-inline"></span><span class="hidden-xs">Comentarios</span>
+            <span class="badge">{{ event.comments.length }}</span>
           </button>
           <button class="btn btn-danger" type="button" ng-click="vm.remove(event.id)"
               ng-show="vm.isAuthenticated() && (vm.isAuthor(event.user.id) || vm.isAdmin())">
-            Eliminar
+            <span class="glyphicon glyphicon-trash visible-xs-inline"></span><span class="hidden-xs">Eliminar</span>
           </button>
           <button class="btn btn-info" type="button" ng-click="vm.edit(event.id)"
               ng-show="vm.isAuthenticated() && (vm.isAuthor(event.user.id) || vm.isAdmin())">
-            Editar
+            <span class="glyphicon glyphicon-pencil visible-xs-inline"></span><span class="hidden-xs">Editar</span>
           </button>
           <button class="btn btn-warning" type="button" ng-click="vm.highlight(event.id)"
               ng-show="vm.isAuthenticated() && vm.isAdmin() && !event.highlight">
-            Destacar
+            <span class="glyphicon glyphicon-star visible-xs-inline"></span><span class="hidden-xs">Destacar</span>
           </button>
           <button class="btn btn-warning" type="button" ng-click="vm.highlight(event.id)"
               ng-show="vm.isAuthenticated() && vm.isAdmin() && event.highlight">
-            Quitar Destacado
+            <span class="glyphicon glyphicon-star-empty visible-xs-inline"></span>
+            <span class="hidden-xs">Quitar Destacado</span>
           </button>
         </div>
         <div class="map-wrapper" ng-class="{visible: vm.visibleMaps[event.id]}">

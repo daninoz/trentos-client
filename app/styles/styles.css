@@ -6,12 +6,21 @@ body {
     color: #3c763d !important;
 }
 
-.navbar .navbar-right {
-    margin-right: 0;
+@media (min-width: 768px) {
+    .navbar .navbar-right {
+        margin-right: 0;
+    }
 }
 
 .navbar .text-danger {
     color: #a94442 !important;
+}
+
+@media (max-width: 767px) {
+    .navbar .navbar-right {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
 }
 
 .social-buttons {
@@ -67,6 +76,10 @@ body {
 .feed .status .panel-heading h3 {
     display: inline-block;
     color: white;
+}
+
+.feed .status .badge {
+    margin-left: 10px;
 }
 
 .feed .map-wrapper {

@@ -1,6 +1,9 @@
 <!doctype html>
 <html ng-app="trentos">
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/satellizer/satellizer.min.js"></script>
   <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -49,7 +52,7 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container" ng-controller="NavbarController as vm">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+        <button type="button" class="navbar-toggle" ng-click="vm.isNavCollapsed = !vm.isNavCollapsed"
             aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -59,9 +62,9 @@
         <a class="navbar-brand" ui-sref="feed" ng-if="vm.isAuthenticated()">Trentos</a>
         <a class="navbar-brand" ui-sref="events" ng-if="!vm.isAuthenticated()">Trentos</a>
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="dropdown" uib-dropdown ng-show="vm.isAuthenticated()">
+      <div id="navbar" class="navbar-collapse collapse" uib-collapse="vm.isNavCollapsed">
+        <ul class="nav navbar-nav" ng-if="vm.isAuthenticated()">
+          <li class="dropdown" uib-dropdown>
             <a href uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">Deportes <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
@@ -70,15 +73,15 @@
               </li>
             </ul>
           </li>
-          <li><a ui-sref="events" ng-show="vm.isAuthenticated()">
+          <li><a ui-sref="events" >
             Todos los eventos
           </a></li>
-          <li><a ui-sref="statistics" ng-show="vm.isAuthenticated() && vm.isAdmin()"
+          <li><a ui-sref="statistics" ng-show="vm.isAdmin()"
               class="hidden-sm">
             Estadisticas
           </a></li>
           <li><a ui-sref="statistics" class="glyphicon glyphicon-stats hidden-lg hidden-md"
-              ng-show="vm.isAuthenticated() && vm.isAdmin()"></a></li>
+              ng-show="vm.isAdmin()"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="vm.isAuthenticated()">
           <li class="bg-success"><a class="text-success" ng-click="vm.openAddEventModal()" href="">
@@ -94,8 +97,6 @@
         <ul class="nav navbar-nav navbar-right" ng-show="!vm.isAuthenticated()">
           <li class="bg-info"><a class="text-info" ng-click="vm.openRegisterModal()" href="">
             Registrate <span class="sr-only">(current)</span></a>
-        </ul>
-        <ul class="nav navbar-nav navbar-right" ng-show="!vm.isAuthenticated()">
           <li class="bg-success"><a class="text-success" ng-click="vm.openLoginModal()" href="">
             Ingresar <span class="sr-only">(current)</span></a>
         </ul>

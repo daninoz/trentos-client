@@ -9,12 +9,12 @@
   function userService ($rootScope) {
     return {
       isAuthor: function (userId) {
-        if ($rootScope.user.id) {
+        if ($rootScope.user && $rootScope.user.id) {
           return $rootScope.user.id === userId;
         }
       },
       isAdmin: function () {
-        if ($rootScope.user.id) {
+        if ($rootScope.user && $rootScope.user.id) {
           return $rootScope.user.is_admin;
         }
       }

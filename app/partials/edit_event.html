@@ -19,6 +19,13 @@
       </span>
     </div>
     <div class="form-group">
+      <label>Lugar</label>
+      <input type="text" class="form-control" disabled ng-model="vm.location"
+          placeholder="Haz click en el mapa para elegir el lugar de encuentro" />
+      <ng-map id="edit-event-map"  zoom="14" center="-26.8279823, -65.1864826" on-click="vm.addLocation()">
+      </ng-map>
+    </div>
+    <div class="form-group">
       <label>Deporte</label>
       <select name="sports" id="sports" ng-model="vm.event.sport_id" required
           ng-options="sport.id as sport.name for sport in vm.sports" class="form-control">

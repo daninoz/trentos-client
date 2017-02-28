@@ -10,7 +10,8 @@
           'ui.bootstrap',
           'angularMoment',
           'chart.js',
-          'validation.match'
+          'validation.match',
+          'ngMap'
       ])
       .config(config)
       .run(runBlock);

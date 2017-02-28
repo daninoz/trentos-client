@@ -22,6 +22,10 @@
           <div>
             {{ event.description }}
           </div>
+          <button class="btn btn-info" type="button" ng-click="vm.displayMap(event.id)"
+              ng-show="event.location">
+            Ver Mapa
+          </button>
           <button class="btn btn-primary" type="button" ng-click="vm.isAuthenticated() && vm.like(event.id, vm)">
             Me gusta <span class="badge">{{ event.likes.length }}</span>
           </button>
@@ -46,7 +50,13 @@
             Quitar Destacado
           </button>
         </div>
+        <div class="map-wrapper" ng-class="{visible: vm.visibleMaps[event.id]}">
+          <ng-map ng-if="event.location" center="{{ event.location }}">
+            <marker position="{{ event.location }}"></marker>
+          </ng-map>
+        </div>
       </div>
+
       <div class="panel-footer comments" ng-show="event.comments.length && vm.displayComments[event.id]">
         <div class="comment" ng-repeat="comment in event.comments">
           <a href="#" class="thumbnail">

@@ -18,6 +18,8 @@
     vm.remove = eventsService.remove;
     vm.edit = edit;
     vm.highlight = eventsService.highlight;
+    vm.displayMap = eventsService.displayMap;
+    vm.visibleMaps = {};
     vm.comments = [];
     vm.displayComments = [];
     vm.message = "Aun no elegiste tus deportes";

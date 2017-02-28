@@ -5,8 +5,8 @@
       .module('trentos')
       .factory('eventsService', eventsService);
 
-  eventsService.$inject = ['$http', '$rootScope'];
-  function eventsService ($http, $rootScope) {
+  eventsService.$inject = ['$timeout', '$http', '$rootScope'];
+  function eventsService ($timeout, $http, $rootScope) {
 
     function getEventById (id, vm) {
       return vm.events.filter(function (event) {
@@ -20,6 +20,9 @@
           getEventById(id, vm).comments = response.data;
           vm.comments[id] = '';
         });
+      },
+      displayMap: function (id) {
+        this.visibleMaps[id] = !this.visibleMaps[id];
       },
       getEvents: function (vm) {
         $http.get('/api/events').then(function (response) {
@@ -36,6 +39,17 @@
           vm.events = response.data;
           if (!vm.events.length) {
             openManageSportsModal();
+          }
+        });
+      },
+      geocodeLatLng: function (latlng, geocoder, vm) {
+        geocoder.geocode({'location': latlng}, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+              $rootScope.$apply(function () {
+                vm.location = results[0].formatted_address;
+              });
+            }
           }
         });
       },

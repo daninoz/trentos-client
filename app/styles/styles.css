@@ -69,6 +69,20 @@ body {
     color: white;
 }
 
+.feed .map-wrapper {
+    height: 0;
+    overflow: hidden;
+}
+
+.feed .map-wrapper.visible {
+    height: auto;
+    overflow: visible;
+}
+
+.feed ng-map {
+    margin-top: 15px;
+}
+
 .feed .comments .comment {
     padding-bottom: 5px;
     padding-top: 5px;

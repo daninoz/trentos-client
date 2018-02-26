@@ -5,8 +5,8 @@
       .module('trentos')
       .factory('authService', authService);
 
-  authService.$inject = ['$auth', '$rootScope', '$http', 'toastr'];
-  function authService ($auth, $rootScope, $http, toastr) {
+  authService.$inject = ['eventsService', '$auth', '$rootScope', '$http', '$state', 'toastr', 'toastrConfig'];
+  function authService (eventsService, $auth, $rootScope, $http, $state, toastr, toastrConfig) {
     return {
       passwordAuthenticate: function (vm, $uibModalInstance) {
         $auth.login({email: vm.user.email, password: vm.user.password})
@@ -16,6 +16,19 @@
                 $rootScope.user = response.data;
               });
               toastr.success('Has ingresado exitosamente!');
+
+              eventsService.getTodayEventsCount().then(function (total) {
+                if (total > 0) {
+                  toastr.info(`Hoy hay ${total} eventos`, '', {
+                    tapToDismiss: true,
+                    closeButton: true,
+                    onTap: function () {
+                      $state.go('today');
+                    }
+                  });
+                }                
+              });
+
               $uibModalInstance.close();
             })
             .catch(function (error) {
@@ -45,6 +58,19 @@
                 $rootScope.user = response.data;
               });
               toastr.success('Has ingresado exitosamente con facebook!');
+
+              eventsService.getTodayEventsCount().then(function (total) {
+                if (total > 0) {
+                  toastr.info(`Hoy hay ${total} eventos`, '', {
+                    tapToDismiss: true,
+                    closeButton: true,
+                    onTap: function () {
+                      $state.go('today');
+                    }
+                  });
+                }                
+              });
+
               $uibModalInstance.close();
             })
             .catch(function (error) {

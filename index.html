@@ -25,6 +25,7 @@
 
   <script src="app/controllers/events.js"></script>
   <script src="app/controllers/feed.js"></script>
+  <script src="app/controllers/today.js"></script>
   <script src="app/controllers/login.js"></script>
   <script src="app/controllers/navbar.js"></script>
   <script src="app/controllers/add_event.js"></script>
@@ -64,6 +65,9 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse" uib-collapse="vm.isNavCollapsed">
         <ul class="nav navbar-nav" ng-if="vm.isAuthenticated()">
+          <li class="bg-info"><a ui-sref="today" class="text-info" >
+            Hoy
+          </a></li>
           <li class="dropdown" uib-dropdown>
             <a href uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">Deportes <span class="caret"></span></a>

@@ -29,6 +29,10 @@ body {
     border-top: 1px solid #e5e5e5;
 }
 
+.date-popup .input-group {
+     margin-top: 34px;
+}
+
 .feed {
     margin-top: 20px;
 }

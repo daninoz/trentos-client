@@ -10,6 +10,7 @@
 
     var url,
         sportsUrl,
+        todayUrl,
         feedUrl;
 
     function getEventById (id, vm) {
@@ -54,6 +55,26 @@
           if (!response.data.next_page_url) {
             vm.loadMoreEnabled = false;
           }
+        });
+      },
+      getTodayEvents: function (vm, restart) {
+        if (restart) {
+          vm.events = [];
+          todayUrl = '/api/events/today';
+          vm.loadMoreEnabled = true;
+        }
+        $http.get(todayUrl).then(function (response) {
+          todayUrl = response.data.next_page_url;
+          vm.events = vm.events.concat(response.data.data);
+          if (!response.data.next_page_url) {
+            vm.loadMoreEnabled = false;
+          }
+        });
+      },
+      getTodayEventsCount: function () {
+        var todayUrl = '/api/events/today';
+        return $http.get(todayUrl).then(function (response) {
+          return response.data.total;
         });
       },
       getFeedEvents: function (vm, openManageSportsModal, restart) {

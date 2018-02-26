@@ -11,10 +11,20 @@
         marker,
         geocoder;
 
+    vm.dateFormat = 'dd/MM/yyyy';
+    vm.datePopupOpened = false;
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      minDate: new Date(),
+      startingDay: 0
+    }
     vm.cancel = cancel;
     vm.edit = edit;
     vm.addLocation = addLocation;
+    vm.openDatePopup = openDatePopup;
     vm.location = '';
+    vm.date = '';
+    vm.time = '';
 
     getSports();
 
@@ -34,6 +44,7 @@
     }
 
     function edit () {
+      vm.event.datetime = combineDateTime(vm.date, vm.time);
       $http.put('/api/events/' + eventId, vm.event).then(function () {
         $uibModalInstance.close();
       });
@@ -43,6 +54,8 @@
       $http.get('/api/events/' + eventId).then(function (response) {
         vm.event = response.data;
         vm.event.sport_id = vm.event.sport.id;
+        vm.date = moment(vm.event.datetime).toDate();
+        vm.time = vm.event.datetime;
         delete vm.event.sport;
         getMap();
       });
@@ -80,6 +93,17 @@
       var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
       return latLng;
+    };
+
+    function openDatePopup () {
+      vm.datePopupOpened = !vm.datePopupOpened;
+    }
+
+    function combineDateTime (date, time) {
+      var dateString = moment(date).format('D-M-YYYY');
+      var timeString = moment(time).format('H:m');
+
+      return dateString + ' ' + timeString;
     };
 
   }

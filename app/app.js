@@ -35,6 +35,12 @@
             loginRequired: loginRequired
           }
         })
+        .state('today', {
+          url: '/hoy',
+          templateUrl: 'app/partials/events.html',
+          controller: 'TodayController',
+          controllerAs: 'vm'
+        })
         .state('sports', {
           url: '/deportes/:sportId',
           templateUrl: 'app/partials/events.html',
@@ -61,10 +67,6 @@
     $authProvider.facebook({
       clientId: '1040065426062280',
       url: '/api/auth/facebook',
-    });
-
-    angular.extend(toastrConfig, {
-      positionClass: 'toast-bottom-right'
     });
 
     function skipIfLoggedIn ($q, $auth) {

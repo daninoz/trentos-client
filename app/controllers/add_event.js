@@ -12,15 +12,26 @@
         geocoder;
 
     vm.event = {};
+    vm.dateFormat = 'dd/MM/yyyy';
+    vm.datePopupOpened = false;
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      minDate: new Date(),
+      startingDay: 0
+    }
     vm.location = '';
+    vm.date = '';
+    vm.time = '';
     vm.add = add;
     vm.addLocation = addLocation;
     vm.cancel = cancel;
+    vm.openDatePopup = openDatePopup;
 
     getSports();
     getMap();
 
     function add () {
+      vm.event.datetime = combineDateTime(vm.date, vm.time);
       $http.post('/api/events', vm.event).then(function () {
         $uibModalInstance.close();
         if (marker) {
@@ -60,6 +71,17 @@
         vm.sports = response.data;
       });
     }
+
+    function openDatePopup () {
+      vm.datePopupOpened = !vm.datePopupOpened;
+    }
+
+    function combineDateTime (date, time) {
+      var dateString = moment(date).format('D-M-YYYY');
+      var timeString = moment(time).format('H:m');
+
+      return dateString + ' ' + timeString;
+    };
 
   }
 })();

@@ -101,7 +101,7 @@
 
     function combineDateTime (date, time) {
       var dateString = moment(date).format('D-M-YYYY');
-      var timeString = moment(time).format('H:m');
+      var timeString = moment(time).format('H:mm');
 
       return dateString + ' ' + timeString;
     };

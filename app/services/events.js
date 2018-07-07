@@ -100,6 +100,7 @@
             if (results[0]) {
               $rootScope.$apply(function () {
                 vm.location = results[0].formatted_address;
+                vm.event.location_description = vm.location;
               });
             }
           }

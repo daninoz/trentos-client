@@ -55,7 +55,12 @@
         </div>
         <div class="map-wrapper" ng-class="{visible: vm.visibleMaps[event.id]}">
           <ng-map ng-if="event.location" center="{{ event.location }}">
-            <marker position="{{ event.location }}"></marker>
+            <marker position="{{ event.location }}" id="marker_{{ event.id }}" on-click="map.showInfoWindow('info_{{ event.id }}')"></marker>
+            <info-window id="info_{{ event.id }}">
+              <div ng-non-bindable="">
+                {{ event.location_description }}
+              </div>
+            </info-window>
           </ng-map>
         </div>
       </div>

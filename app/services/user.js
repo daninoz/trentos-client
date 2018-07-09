@@ -17,7 +17,8 @@
         if ($rootScope.user && $rootScope.user.id) {
           return $rootScope.user.is_admin;
         }
-      }
+      },
+      userSports: $rootScope.user.sports
     };
   }
 })();

@@ -89,7 +89,7 @@
           if (!response.data.next_page_url) {
             vm.loadMoreEnabled = false;
           }
-          if (!vm.events.length) {
+          if (!vm.events.length && !$rootScope.user.sports.length) {
             openManageSportsModal();
           }
         });

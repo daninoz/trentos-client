@@ -23,7 +23,7 @@
     vm.visibleMaps = {};
     vm.comments = [];
     vm.displayComments = [];
-    vm.message = "Aun no elegiste tus deportes";
+    vm.message = userService.userSports.length ? "No hay eventos para tus deportes." : "Aun no elegiste tus deportes";
 
     eventsService.getFeedEvents(vm, openManageSportsModal, true);
 
